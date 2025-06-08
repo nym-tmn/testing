@@ -9,3 +9,22 @@ exports[`Component Button > snapshot 1`] = `
   Processing...
 </button>
 `;
+
+exports[`Component Button > snapshot: Button with onClick and disabled 1`] = `
+<button
+  data-testid="click-btn"
+  disabled=""
+  type="button"
+>
+  Processing...
+</button>
+`;
+
+exports[`Component Button > snapshot: Button with onClick and without disabled 1`] = `
+<button
+  data-testid="click-btn"
+  type="button"
+>
+  Press me
+</button>
+`;

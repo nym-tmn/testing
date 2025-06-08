@@ -36,4 +36,10 @@ describe('Component Button', () => {
 		render(<Button onClick={handleClick} disabled>Press me</Button>);
 		expect(screen.getByTestId('click-btn')).toMatchSnapshot();
 	})
+
+	it('snapshot: Button with onClick and without disabled', async() => {
+		const handleClick = vi.fn();
+		render(<Button onClick={handleClick}>Press me</Button>);
+		expect(screen.getByTestId('click-btn')).toMatchSnapshot();
+	})
 });
