@@ -17,7 +17,7 @@ const App = () => {
     <>
 			<Button
 				disabled={isDisabled}
-				handleClick={handleClick}
+				onClick={handleClick}
 			>
 				Press me
 			</Button>

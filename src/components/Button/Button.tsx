@@ -3,14 +3,15 @@ import type { ReactNode, MouseEvent } from "react"
 interface ButtonProps {
 	children: ReactNode;
 	disabled?: boolean;
-	handleClick?: (event: MouseEvent<HTMLButtonElement>) => void
+	onClick: (event: MouseEvent<HTMLButtonElement>) => void
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, handleClick, disabled }) => {
+export const Button: React.FC<ButtonProps> = ({ children, onClick, disabled }) => {
 	return (
 		<button
+			data-testId={'click-btn'}
 			type="button"
-			onClick={handleClick}
+			onClick={onClick}
 			disabled={disabled}
 		>
 			{disabled ? 'Processing...' : children}
