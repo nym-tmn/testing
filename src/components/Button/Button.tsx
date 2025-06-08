@@ -9,7 +9,7 @@ interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({ children, onClick, disabled }) => {
 	return (
 		<button
-			data-testId={'click-btn'}
+			data-testid={'$click-btn'}
 			type="button"
 			onClick={onClick}
 			disabled={disabled}
