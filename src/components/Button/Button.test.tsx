@@ -30,4 +30,10 @@ describe('Component Button', () => {
 		await userEvent.click(screen.getByTestId('click-btn'));
 		expect(handleClick).not.toHaveBeenCalled();
 	})
+
+	it('snapshot: Button with onClick and disabled', async() => {
+		const handleClick = vi.fn();
+		render(<Button onClick={handleClick} disabled>Press me</Button>);
+		expect(screen.getByTestId('click-btn')).toMatchSnapshot();
+	})
 });

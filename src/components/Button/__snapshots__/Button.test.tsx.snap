@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Component Button > snapshot 1`] = `
+<button
+  data-testid="click-btn"
+  disabled=""
+  type="button"
+>
+  Processing...
+</button>
+`;
