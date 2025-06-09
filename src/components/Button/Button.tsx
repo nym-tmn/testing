@@ -1,18 +1,21 @@
-import type { ReactNode, MouseEvent } from "react"
+import type { MouseEventHandler, ReactNode } from "react"
+import styles from './Button.module.css'
 
 interface ButtonProps {
 	children: ReactNode;
 	disabled?: boolean;
-	onClick: (event: MouseEvent<HTMLButtonElement>) => void
+	onClick?: MouseEventHandler<HTMLButtonElement>;
+	type: "submit" | "reset" | "button" | undefined;
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, onClick, disabled }) => {
+export const Button: React.FC<ButtonProps> = ({ children, onClick, disabled, ...props }) => {
 	return (
 		<button
+			className={styles.button}
 			data-testid={'click-btn'}
-			type="button"
 			onClick={onClick}
 			disabled={disabled}
+			{...props}
 		>
 			{disabled ? 'Processing...' : children}
 		</button>
