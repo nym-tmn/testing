@@ -1,4 +1,4 @@
-import { type FormEvent, type RefObject } from 'react'
+import { useState, type FormEvent, type RefObject } from 'react'
 import { Button } from '../Button/Button'
 import styles from './LoginForm.module.css'
 import { useAuth } from '../../hooks/useAuth';
@@ -10,13 +10,21 @@ interface LoginFormProps {
 
 export const LoginForm: React.FC<LoginFormProps> = ({ dialogRef, handleModalClick }) => {
 
+	const [isDisabled, setIsDisabled] = useState(false);
+
 	const { toggleAuth } = useAuth();
 
 	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
-		toggleAuth();
-		dialogRef.current?.close();
-		handleModalClick();
+
+		setIsDisabled(true);
+		
+		setTimeout(() => {
+			toggleAuth();
+			dialogRef.current?.close();
+			handleModalClick();
+			setIsDisabled(false);
+		}, 2000)
 	}
 
 	return (
@@ -27,7 +35,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ dialogRef, handleModalClic
 			<input autoComplete='off' id="email" type="email" />
 			<label htmlFor="password">Password:</label>
 			<input id="password" type="password" />
-			<Button type='submit'>Войти</Button>
+			<Button disabled={isDisabled} type='submit'>Войти</Button>
 		</form>
 	)
 }
