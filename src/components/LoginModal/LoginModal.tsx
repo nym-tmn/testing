@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom"
 import { LoginForm } from "../LoginForm/LoginForm"
-import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from "react"
+import { useEffect, useRef, useState, type MouseEvent } from "react"
 import { Button } from "../Button/Button";
 import styles from './LoginModal.module.css'
 import { useAuth } from "../../hooks/useAuth";
@@ -16,24 +16,29 @@ export interface LoginData {
 	password: string;
 }
 
+export interface ErrorsData {
+	general: string;
+	email: string;
+	password: string;
+}
+
 export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleModalClick }) => {
 
 	const [loginData, setLoginData] = useState({ email: '', password: '' });
 	const [isDisabled, setIsDisabled] = useState(false);
-	const [error, setError] = useState('');
+	const [errors, setErrors] = useState({general: '', email: '', password: ''});
 
 	const { toggleAuth } = useAuth();
 
 	const dialogRef = useRef<HTMLDialogElement>(null);
 
-	const handleSubmit = async (event: FormEvent) => {
-		event.preventDefault();
+	const handleLogin = async (data: LoginData) => {
 
 		setIsDisabled(true);
 
 		try {
-			setError('')
-			await authorization(loginData);
+			setErrors(errors => ({...errors, general: ''}))
+			await authorization(data);
 			toggleAuth();
 			setLoginData({ email: '', password: '' })
 			dialogRef.current?.close();
@@ -41,7 +46,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleModal
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error.message);
-				setError(error.message)
+				setErrors(errors => ({ ...errors, general: error.message }))
 			}
 		} finally {
 			setIsDisabled(false);
@@ -60,7 +65,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleModal
 			dialogRef.current?.showModal();
 		} else {
 			dialogRef.current?.close();
-			setError('')
+			setErrors(errors => ({ ...errors, general: '' }))
 			setLoginData({ email: '', password: '' })
 		}
 	}, [isOpenModal])
@@ -78,8 +83,9 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleModal
 					loginData={loginData}
 					setLoginData={setLoginData}
 					isDisabled={isDisabled}
-					handleSubmit={handleSubmit}
-					error={error} />
+					errors={errors}
+					setErrors={setErrors}
+					onLogin={handleLogin} />
 			</div>
 		</dialog>,
 		document.body
