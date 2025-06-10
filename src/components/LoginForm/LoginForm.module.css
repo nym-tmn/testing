@@ -6,3 +6,11 @@
 	width: 350px;
 	height: 100%;
 }
+
+.paragraph {
+	margin: 0;
+}
+
+.error {
+	color: red;
+}
