@@ -72,7 +72,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 			{errors.email && <p className={`${styles.paragraph} ${errors ? styles.error : ''}`}>{errors.email}</p>}
 			<input
 				name='email'
-				autoComplete='off'
+				// autoComplete='off'
 				id="email"
 				type="email"
 				required

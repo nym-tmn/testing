@@ -19,9 +19,9 @@ const App = () => {
 			{isAuth
 				? <>
 					<p>Вы авторизованы!!!</p>
-					<Button type="button" onClick={toggleAuth}>Выйти</Button>
+					<Button onClick={toggleAuth}>Выйти</Button>
 				</>
-				: <Button type="button" onClick={handleModalClick}>
+				: <Button onClick={handleModalClick}>
 					Авторизоваться
 				</Button>
 			}

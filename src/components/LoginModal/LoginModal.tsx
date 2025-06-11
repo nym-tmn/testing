@@ -78,7 +78,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleModal
 			onCancel={handleModalClick}
 		>
 			<div className={styles.dialogContent}>
-				<Button type="button" onClick={handleModalClick}>X</Button>
+				<Button onClick={handleModalClick}>X</Button>
 				<LoginForm
 					loginData={loginData}
 					setLoginData={setLoginData}

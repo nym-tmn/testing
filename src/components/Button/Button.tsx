@@ -5,17 +5,18 @@ interface ButtonProps {
 	children: ReactNode;
 	disabled?: boolean;
 	onClick?: MouseEventHandler<HTMLButtonElement>;
-	type: "submit" | "reset" | "button" | undefined;
+	type?: "submit" | "reset" | "button";
 }
 
-export const Button: React.FC<ButtonProps> = ({ children, onClick, disabled, ...props }) => {
+export const Button: React.FC<ButtonProps> = ({ children, onClick, disabled, type = 'button' }) => {
+
 	return (
 		<button
 			className={styles.button}
 			data-testid={'click-btn'}
 			onClick={onClick}
-			disabled={disabled}
-			{...props}
+			type={type}
+			disabled={type === 'submit' ? disabled : false}
 		>
 			{disabled ? 'Processing...' : children}
 		</button>

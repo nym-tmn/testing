@@ -1,20 +1,32 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Component Button > snapshot: Button with onClick and disabled 1`] = `
+exports[`Button component > snapshot: Button default 1`] = `
+<button
+  class="_button_0829c1"
+  data-testid="click-btn"
+  type="button"
+>
+  Click me
+</button>
+`;
+
+exports[`Button component > snapshot: Button submit 1`] = `
+<button
+  class="_button_0829c1"
+  data-testid="click-btn"
+  type="submit"
+>
+  Send
+</button>
+`;
+
+exports[`Button component > snapshot: Button submit disabled 1`] = `
 <button
   class="_button_0829c1"
   data-testid="click-btn"
   disabled=""
+  type="submit"
 >
   Processing...
-</button>
-`;
-
-exports[`Component Button > snapshot: Button with onClick and without disabled 1`] = `
-<button
-  class="_button_0829c1"
-  data-testid="click-btn"
->
-  Press me
 </button>
 `;
