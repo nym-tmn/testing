@@ -14,7 +14,6 @@ const App = () => {
 	}
 
 	return (
-
 		<>
 			{isAuth
 				? <>
@@ -25,7 +24,7 @@ const App = () => {
 					Авторизоваться
 				</Button>
 			}
-			<LoginModal isOpenModal={isOpenModal} handleModalClick={handleModalClick} />
+			{isOpenModal && <LoginModal handleModalClick={handleModalClick} />}
 		</>
 	)
 }
