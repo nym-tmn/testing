@@ -15,7 +15,6 @@ describe('Button component', () => {
 		it('should disable only when type="submit" + disabled=true', () => {
 			const { rerender } = render(<Button type="submit" disabled>Click me</Button>);
 			expect(screen.getByTestId('click-btn')).toBeDisabled();
-
 			rerender(<Button disabled>Button</Button>);
 			expect(screen.getByTestId('click-btn')).not.toBeDisabled();
 		});
@@ -25,7 +24,6 @@ describe('Button component', () => {
 		it('should not call onClick when disabled with type="submit"', async () => {
 			const handleClick = vi.fn()
 			render(<Button type="submit" disabled onClick={handleClick}>Click me</Button>)
-
 			await userEvent.click(screen.getByTestId('click-btn'))
 			expect(handleClick).not.toHaveBeenCalled()
 		});
@@ -33,16 +31,9 @@ describe('Button component', () => {
 		it('should call onClick when not disabled', async () => {
 			const handleClick = vi.fn()
 			render(<Button onClick={handleClick}>Click me</Button>)
-
 			await userEvent.click(screen.getByTestId('click-btn'))
-			expect(handleClick).toHaveBeenCalled()
-		});
-
-		it('calls onClick when clicked 1 time', async () => {
-			const onClick = vi.fn();
-			render(<Button onClick={onClick}>Click me</Button>);
-			await userEvent.click(screen.getByTestId('click-btn'));
-			expect(onClick).toHaveBeenCalledTimes(1);
+			expect(handleClick).toHaveBeenCalled();
+			expect(handleClick).toHaveBeenCalledTimes(1);
 		});
 	});
 
