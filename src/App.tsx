@@ -5,7 +5,7 @@ import { useAuth } from "./hooks/useAuth";
 
 const App = () => {
 
-	const { isAuth, toggleAuth } = useAuth();
+	const { isAuth, logout } = useAuth();
 
 	const [isOpenModal, setIsOpenModal] = useState(false)
 
@@ -18,7 +18,7 @@ const App = () => {
 			{isAuth
 				? <>
 					<p>Вы авторизованы!!!</p>
-					<Button onClick={toggleAuth}>Выйти</Button>
+					<Button onClick={logout}>Выйти</Button>
 				</>
 				: <Button onClick={handleShowModalClick}>
 					Авторизоваться

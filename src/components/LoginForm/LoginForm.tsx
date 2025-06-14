@@ -2,6 +2,8 @@ import { type ChangeEvent, type Dispatch, type FormEvent } from 'react'
 import { Button } from '../Button/Button'
 import styles from './LoginForm.module.css'
 import type { ErrorsData, LoginData } from '../LoginModal/LoginModal';
+import { validateEmail } from './helpers/email/validateEmail';
+import { validatePassword } from './helpers/password/validatePassword';
 
 interface LoginFormProps {
 	loginData: LoginData;
@@ -21,20 +23,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 	setErrors,
 }) => {
 
-	const validateEmail = (email: string) => {
-		if (!email) return 'Email обязателен';
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!emailRegex.test(email)) return 'Введите корректный email';
-		return ''
-	}
+	// const validateEmail = (email: string) => {
+	// 	if (!email) return 'Email обязателен';
+	// 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	// 	if (!emailRegex.test(email)) return 'Введите корректный email';
+	// 	return ''
+	// }
 
-	const validatePassword = (password: string) => {
-		if (!password) return 'Пароль обязателен';
-		if (password.length < 8) return 'Пароль должен быть не короче 8 символов';
-		const passwordRegex = /^\d+$/;
-		if (!passwordRegex.test(password)) return 'Пароль может состоять только из цифр';
-		return ''
-	}
+	// const validatePassword = (password: string) => {
+	// 	if (!password) return 'Пароль обязателен';
+	// 	if (password.length < 8) return 'Пароль должен быть не короче 8 символов';
+	// 	const passwordRegex = /^\d+$/;
+	// 	if (!passwordRegex.test(password)) return 'Пароль может состоять только из цифр';
+	// 	return ''
+	// }
 
 	const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
@@ -51,17 +53,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 	}
 
 	const handleSubmit = async (event: FormEvent) => {
-			event.preventDefault();
+		event.preventDefault();
 
-			const emailError = validateEmail(loginData.email);
+		const emailError = validateEmail(loginData.email);
 		const passwordError = validatePassword(loginData.password);
-		
-		setErrors(errors => ({ ...errors, email: emailError, password: passwordError}))
 
-			if (emailError || passwordError) return;
+		setErrors(errors => ({ ...errors, email: emailError, password: passwordError }))
+
+		if (emailError || passwordError) return;
 
 		onLogin(loginData);
-		}
+	}
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit}>

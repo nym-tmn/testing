@@ -27,7 +27,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ handleShowModalClick }) 
 	const [isDisabled, setIsDisabled] = useState(false);
 	const [errors, setErrors] = useState({ general: '', email: '', password: '' });
 
-	const { toggleAuth } = useAuth();
+	const { login } = useAuth();
 
 	const modalRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +38,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ handleShowModalClick }) 
 		try {
 			setErrors(errors => ({ ...errors, general: '' }))
 			await authorization(data);
-			toggleAuth();
+			login();
 			setLoginData({ email: '', password: '' })
 			handleShowModalClick();
 		} catch (error) {

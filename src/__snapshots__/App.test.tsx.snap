@@ -1,0 +1,32 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App component > Render greeting and button with text "Exit" if authorized 1`] = `
+<div
+  data-testid="app"
+>
+  <p>
+    Вы авторизованы!!!
+  </p>
+  <button
+    class="_button_0829c1"
+    data-testid="click-btn"
+    type="button"
+  >
+    Выйти
+  </button>
+</div>
+`;
+
+exports[`App component > Render of a button with the text "Login" if not logged in 1`] = `
+<div
+  data-testid="app"
+>
+  <button
+    class="_button_0829c1"
+    data-testid="click-btn"
+    type="button"
+  >
+    Авторизоваться
+  </button>
+</div>
+`;

@@ -7,10 +7,11 @@ import userEvent from "@testing-library/user-event";
 describe('App component', () => {
 	it('Render of a button with the text "Login" if not logged in', () => {
 
-		const toggleAuth = vi.fn();
+		const login = vi.fn();
+		const logout = vi.fn();
 
 		render(
-			<AuthContext.Provider value={{ isAuth: false, toggleAuth }}>
+			<AuthContext.Provider value={{ isAuth: false, login, logout }}>
 				<App />
 			</AuthContext.Provider>);
 
@@ -22,10 +23,11 @@ describe('App component', () => {
 
 	it('Render greeting and button with text "Exit" if authorized', () => {
 
-		const toggleAuth = vi.fn();
+		const login = vi.fn();
+		const logout = vi.fn();
 
 		render(
-			<AuthContext.Provider value={{ isAuth: true, toggleAuth }}>
+			<AuthContext.Provider value={{ isAuth: true, login, logout }}>
 				<App />
 			</AuthContext.Provider>);
 
@@ -36,8 +38,12 @@ describe('App component', () => {
 	});
 
 	it('should open modal when clicked button "Authorization"', async () => {
+
+		const login = vi.fn();
+		const logout = vi.fn();
+
 		render(
-			<AuthContext.Provider value={{ isAuth: false, toggleAuth: vi.fn() }}>
+			<AuthContext.Provider value={{ isAuth: false, login, logout }}>
 				<App />
 			</AuthContext.Provider>
 		);
@@ -50,8 +56,12 @@ describe('App component', () => {
 	});
 
 	it('should close modal when clicked button "X"', async () => {
+
+		const login = vi.fn();
+		const logout = vi.fn();
+
 		render(
-			<AuthContext.Provider value={{ isAuth: false, toggleAuth: vi.fn() }}>
+			<AuthContext.Provider value={{ isAuth: false, login, logout }}>
 				<App />
 			</AuthContext.Provider>
 		);
