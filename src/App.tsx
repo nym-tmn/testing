@@ -14,7 +14,7 @@ const App = () => {
 	}
 
 	return (
-		<>
+		<div data-testid='app'>
 			{isAuth
 				? <>
 					<p>Вы авторизованы!!!</p>
@@ -25,7 +25,7 @@ const App = () => {
 				</Button>
 			}
 			{isOpenModal && <LoginModal handleModalClick={handleModalClick} />}
-		</>
+		</div>
 	)
 }
 

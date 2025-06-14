@@ -60,6 +60,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ handleModalClick }) => {
 	return createPortal(
 
 		<div
+			data-testid='login-modal'
 			className={styles.modalOverlay}
 			ref={modalRef}
 			onClick={handleCloseBackdrop}
