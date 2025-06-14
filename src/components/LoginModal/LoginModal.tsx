@@ -1,13 +1,13 @@
 import { createPortal } from "react-dom"
 import { LoginForm } from "../LoginForm/LoginForm"
-import { useRef, useState, type MouseEvent } from "react"
+import { useRef, useState, type MouseEvent, type KeyboardEvent, useEffect } from "react"
 import { Button } from "../Button/Button";
 import styles from './LoginModal.module.css'
 import { useAuth } from "../../hooks/useAuth";
 import { authorization } from "../../api/api";
 
 interface LoginModalProps {
-	handleModalClick: () => void;
+	handleShowModalClick: () => void;
 }
 
 export interface LoginData {
@@ -21,7 +21,7 @@ export interface ErrorsData {
 	password: string;
 }
 
-export const LoginModal: React.FC<LoginModalProps> = ({ handleModalClick }) => {
+export const LoginModal: React.FC<LoginModalProps> = ({ handleShowModalClick }) => {
 
 	const [loginData, setLoginData] = useState({ email: '', password: '' });
 	const [isDisabled, setIsDisabled] = useState(false);
@@ -40,7 +40,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ handleModalClick }) => {
 			await authorization(data);
 			toggleAuth();
 			setLoginData({ email: '', password: '' })
-			handleModalClick();
+			handleShowModalClick();
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error.message);
@@ -53,9 +53,23 @@ export const LoginModal: React.FC<LoginModalProps> = ({ handleModalClick }) => {
 
 	const handleCloseBackdrop = (event: MouseEvent<HTMLDivElement>) => {
 		if (event.target === modalRef.current) {
-			handleModalClick();
+			handleShowModalClick();
 		}
 	};
+
+	useEffect(() => {
+		const handleCloseKeyDown = (event: KeyboardEvent | globalThis.KeyboardEvent) => {
+			if (event.key === 'Escape') {
+				handleShowModalClick();
+			}
+		}
+
+		document.addEventListener('keydown', handleCloseKeyDown);
+
+		return () => {
+			document.removeEventListener('keydown', handleCloseKeyDown);
+		}
+	}, [handleShowModalClick])
 
 	return createPortal(
 
@@ -65,8 +79,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({ handleModalClick }) => {
 			ref={modalRef}
 			onClick={handleCloseBackdrop}
 		>
-			<div className={styles.modal}>
-				<Button onClick={handleModalClick}>X</Button>
+			<div
+				className={styles.modal}
+			>
+				<Button onClick={handleShowModalClick}>X</Button>
 				<LoginForm
 					loginData={loginData}
 					setLoginData={setLoginData}

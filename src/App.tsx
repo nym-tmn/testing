@@ -9,7 +9,7 @@ const App = () => {
 
 	const [isOpenModal, setIsOpenModal] = useState(false)
 
-	const handleModalClick = () => {
+	const handleShowModalClick = () => {
 		setIsOpenModal(prev => !prev)
 	}
 
@@ -20,11 +20,11 @@ const App = () => {
 					<p>Вы авторизованы!!!</p>
 					<Button onClick={toggleAuth}>Выйти</Button>
 				</>
-				: <Button onClick={handleModalClick}>
+				: <Button onClick={handleShowModalClick}>
 					Авторизоваться
 				</Button>
 			}
-			{isOpenModal && <LoginModal handleModalClick={handleModalClick} />}
+			{isOpenModal && <LoginModal handleShowModalClick={handleShowModalClick} />}
 		</div>
 	)
 }
