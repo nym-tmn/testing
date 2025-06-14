@@ -23,21 +23,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 	setErrors,
 }) => {
 
-	// const validateEmail = (email: string) => {
-	// 	if (!email) return 'Email обязателен';
-	// 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	// 	if (!emailRegex.test(email)) return 'Введите корректный email';
-	// 	return ''
-	// }
-
-	// const validatePassword = (password: string) => {
-	// 	if (!password) return 'Пароль обязателен';
-	// 	if (password.length < 8) return 'Пароль должен быть не короче 8 символов';
-	// 	const passwordRegex = /^\d+$/;
-	// 	if (!passwordRegex.test(password)) return 'Пароль может состоять только из цифр';
-	// 	return ''
-	// }
-
 	const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const value = event.target.value;
 		setLoginData(loginData => ({ ...loginData, email: value }));
