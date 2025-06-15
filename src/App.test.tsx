@@ -1,19 +1,40 @@
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from '@testing-library/react';
 import App from './App';
-import { AuthContext } from "./context/AuthContext";
 import userEvent from "@testing-library/user-event";
+import { useAuth } from "./hooks/useAuth";
+
+vi.mock('./hooks/useAuth', () => ({
+	useAuth: vi.fn(() => ({
+		isAuth: false,
+		login: vi.fn(),
+		logout: vi.fn(),
+	}))
+}));
+
+vi.mock('./components/LoginModal/LoginModal', () => ({
+	LoginModal: vi.fn(({ handleShowModalClick }) => (
+		<div data-testid='login-modal'>
+			<button onClick={handleShowModalClick}>X</button>
+		</div>
+	))
+}))
+
+vi.mock('./components/Button/Button', () => ({
+	Button: vi.fn(({ children, onClick }) => (
+		<button onClick={onClick}>{children}</button>
+	))
+}))
 
 describe('App component', () => {
-	it('Render of a button with the text "Login" if not logged in', () => {
 
-		const login = vi.fn();
-		const logout = vi.fn();
+	beforeEach(() => {
+		vi.clearAllMocks();
+	})
 
-		render(
-			<AuthContext.Provider value={{ isAuth: false, login, logout }}>
-				<App />
-			</AuthContext.Provider>);
+	it('should render of button with text "Login" if not logged in', () => {
+
+		render(<App />);
 
 		expect(screen.getByRole('button', { name: /^Авторизоваться$/ })).toBeInTheDocument();
 		expect(screen.queryByText('Вы авторизованы!!!')).toBeNull();
@@ -21,15 +42,15 @@ describe('App component', () => {
 		expect(screen.getByTestId('app')).toMatchSnapshot();
 	});
 
-	it('Render greeting and button with text "Exit" if authorized', () => {
+	it('should render greeting and button with text "Exit" if authorized', () => {
 
-		const login = vi.fn();
-		const logout = vi.fn();
+		vi.mocked(useAuth).mockReturnValue({
+			isAuth: true,
+			login: vi.fn(),
+			logout: vi.fn(),
+		})
 
-		render(
-			<AuthContext.Provider value={{ isAuth: true, login, logout }}>
-				<App />
-			</AuthContext.Provider>);
+		render(<App />);
 
 		expect(screen.getByText(/^Вы авторизованы!!!$/)).toBeInTheDocument()
 		expect(screen.getByRole('button', { name: /^Выйти$/ })).toBeInTheDocument();
@@ -39,37 +60,32 @@ describe('App component', () => {
 
 	it('should open modal when clicked button "Authorization"', async () => {
 
-		const login = vi.fn();
-		const logout = vi.fn();
+		vi.mocked(useAuth).mockReturnValue({
+			isAuth: false,
+			login: vi.fn(),
+			logout: vi.fn(),
+		})
 
-		render(
-			<AuthContext.Provider value={{ isAuth: false, login, logout }}>
-				<App />
-			</AuthContext.Provider>
-		);
+		render(<App />);
 
 		expect(screen.queryByTestId('login-modal')).toBeNull();
-
 		await userEvent.click(screen.getByRole('button', { name: /^Авторизоваться$/ }));
-
 		expect(screen.getByTestId('login-modal')).toBeInTheDocument();
 	});
 
-	it('should close modal when clicked button "X"', async () => {
+	it('should call logout when button with text "Exit" is clicked', async () => {
 
-		const login = vi.fn();
-		const logout = vi.fn();
+		const mockLogout = vi.fn();
 
-		render(
-			<AuthContext.Provider value={{ isAuth: false, login, logout }}>
-				<App />
-			</AuthContext.Provider>
-		);
+		vi.mocked(useAuth).mockReturnValue({
+			isAuth: true,
+			login: vi.fn(),
+			logout: mockLogout,
+		})
 
-		await userEvent.click(screen.getByRole('button', { name: /Авторизоваться/i }));
+		render(<App />);
 
-		await userEvent.click(screen.getByRole('button', { name: /^X$/ }));
-
-		expect(screen.queryByTestId('login-modal')).toBeNull();
+		await userEvent.click(screen.getByRole('button', { name: /^Выйти$/ }));
+		expect(mockLogout).toHaveBeenCalledOnce();
 	});
-})
+});
