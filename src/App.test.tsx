@@ -13,10 +13,12 @@ vi.mock('./hooks/useAuth', () => ({
 }));
 
 vi.mock('./components/LoginModal/LoginModal', () => ({
-	LoginModal: vi.fn(({ handleShowModalClick }) => (
-		<div data-testid='login-modal'>
-			<button onClick={handleShowModalClick}>X</button>
-		</div>
+	LoginModal: vi.fn(({ isOpenModal, handleShowModalClick }) => (
+		isOpenModal ? (
+			<div data-testid='login-modal'>
+				<button onClick={handleShowModalClick}>X</button>
+			</div>
+		) : null
 	))
 }))
 
