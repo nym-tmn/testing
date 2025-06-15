@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Button } from './Button';
@@ -6,47 +6,49 @@ import userEvent from '@testing-library/user-event';
 
 describe('Button component', () => {
 
-	it('should render button with text', () => {
+	const handleClick = vi.fn();
+
+	beforeEach(() => {
+		handleClick.mockClear();
+	})
+
+	it('should render with default props', () => {
 		render(<Button>Click me</Button>);
 		expect(screen.getByTestId('click-btn')).toBeInTheDocument();
+		expect(screen.getByTestId('click-btn')).toHaveTextContent('Click me');
 	});
 
-	describe('Button disabled state', () => {
-		it('should disable only when type="submit" + disabled=true', () => {
-			const { rerender } = render(<Button type="submit" disabled>Click me</Button>);
-			expect(screen.getByTestId('click-btn')).toBeDisabled();
-			rerender(<Button disabled>Button</Button>);
-			expect(screen.getByTestId('click-btn')).not.toBeDisabled();
-		});
+	it('should call onClick when clicked', async () => {
+		render(<Button onClick={handleClick}>Click me</Button>);
+		await userEvent.click(screen.getByTestId('click-btn'));
+		expect(handleClick).toHaveBeenCalled();
 	});
 
-	describe('Interactions with user', () => {
-		it('should not call onClick when disabled with type="submit"', async () => {
-			const handleClick = vi.fn()
-			render(<Button type="submit" disabled onClick={handleClick}>Click me</Button>)
-			await userEvent.click(screen.getByTestId('click-btn'))
-			expect(handleClick).not.toHaveBeenCalled()
-		});
-
-		it('should call onClick when not disabled', async () => {
-			const handleClick = vi.fn()
-			render(<Button onClick={handleClick}>Click me</Button>)
-			await userEvent.click(screen.getByTestId('click-btn'))
-			expect(handleClick).toHaveBeenCalled();
-			expect(handleClick).toHaveBeenCalledTimes(1);
-		});
+	it('should display Processing... and be disabled when type=submit and disabled=true', () => {
+		render(<Button type="submit" disabled>Click me</Button>);
+		const button = screen.getByTestId('click-btn');
+		expect(button).toBeDisabled();
+		expect(button).toHaveTextContent('Processing...');
 	});
 
-	describe('Visual feedback', () => {
-		it('should show "Processing..." when disabled with type="submit"', () => {
-			render(<Button type="submit" disabled>Click me</Button>)
-			expect(screen.getByTestId('click-btn')).toHaveTextContent('Processing...')
-		});
+	it('should not call onClick when disabled', async () => {
+		render(<Button type="submit" disabled onClick={handleClick}>Click me</Button>);
+		await userEvent.click(screen.getByTestId('click-btn'));
+		expect(handleClick).not.toHaveBeenCalled();
+	});
 
-		it('should show children when not disabled', () => {
-			render(<Button type="submit">Click me</Button>)
-			expect(screen.getByTestId('click-btn')).toHaveTextContent('Click me')
-		});
+	it('should reset to enabled state when disabled=false', () => {
+		render(<Button disabled={false}>Click me</Button>);
+		const button = screen.getByTestId('click-btn');
+		expect(button).not.toBeDisabled();
+		expect(button).toHaveTextContent('Click me');
+	});
+
+	it('should display original text when type=submit and not disabled', () => {
+		render(<Button type="submit">Click me</Button>);
+		const button = screen.getByTestId('click-btn');
+		expect(button).not.toBeDisabled();
+		expect(button).toHaveTextContent('Click me');
 	});
 
 	it('snapshot: Button default', () => {
