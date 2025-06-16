@@ -2,9 +2,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render, screen } from '@testing-library/react';
 import App from './App';
 import userEvent from "@testing-library/user-event";
-import { useAuth } from "./hooks/useAuth";
+import { useAuth } from "./hooks/isAuth/useAuth";
 
-vi.mock('./hooks/useAuth', () => ({
+vi.mock('./hooks/isAuth/useAuth', () => ({
 	useAuth: vi.fn(() => ({
 		isAuth: false,
 		login: vi.fn(),

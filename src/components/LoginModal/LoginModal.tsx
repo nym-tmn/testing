@@ -1,13 +1,15 @@
 import { createPortal } from "react-dom"
 import { LoginForm } from "../LoginForm/LoginForm"
-import { useRef, useState, type MouseEvent, type KeyboardEvent, useEffect } from "react"
+import { useRef, useState} from "react"
 import { Button } from "../Button/Button";
 import styles from './LoginModal.module.css'
-import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/isAuth/useAuth";
 import { authorization } from "../../api/api";
+import { useHandleCloseModal } from "../../hooks/useHandleCloseModal/useHandleCloseModal";
 
 interface LoginModalProps {
-	handleShowModalClick: () => void;
+	isOpenModal: boolean;
+	handleClose: VoidFunction;
 }
 
 export interface LoginData {
@@ -21,15 +23,18 @@ export interface ErrorsData {
 	password: string;
 }
 
-export const LoginModal: React.FC<LoginModalProps> = ({ handleShowModalClick }) => {
+export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleClose}) => {
 
 	const [loginData, setLoginData] = useState({ email: '', password: '' });
 	const [isDisabled, setIsDisabled] = useState(false);
 	const [errors, setErrors] = useState({ general: '', email: '', password: '' });
 
+
 	const { login } = useAuth();
 
 	const modalRef = useRef<HTMLDivElement>(null);
+
+	const { handleCloseBackdrop} = useHandleCloseModal(handleClose, modalRef)
 
 	const handleLogin = async (data: LoginData) => {
 
@@ -40,7 +45,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ handleShowModalClick }) 
 			await authorization(data);
 			login();
 			setLoginData({ email: '', password: '' })
-			handleShowModalClick();
+			handleClose();
 		} catch (error) {
 			if (error instanceof Error) {
 				console.error(error.message);
@@ -51,25 +56,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ handleShowModalClick }) 
 		}
 	}
 
-	const handleCloseBackdrop = (event: MouseEvent<HTMLDivElement>) => {
-		if (event.target === modalRef.current) {
-			handleShowModalClick();
-		}
-	};
-
-	useEffect(() => {
-		const handleCloseKeyDown = (event: KeyboardEvent | globalThis.KeyboardEvent) => {
-			if (event.key === 'Escape') {
-				handleShowModalClick();
-			}
-		}
-
-		document.addEventListener('keydown', handleCloseKeyDown);
-
-		return () => {
-			document.removeEventListener('keydown', handleCloseKeyDown);
-		}
-	}, [handleShowModalClick])
+	if (!isOpenModal) return null;
 
 	return createPortal(
 
@@ -80,9 +67,10 @@ export const LoginModal: React.FC<LoginModalProps> = ({ handleShowModalClick }) 
 			onClick={handleCloseBackdrop}
 		>
 			<div
+				data-testid='modal-content'
 				className={styles.modal}
 			>
-				<Button onClick={handleShowModalClick}>X</Button>
+				<Button onClick={handleClose}>X</Button>
 				<LoginForm
 					loginData={loginData}
 					setLoginData={setLoginData}

@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 
 const handleClose = vi.fn();
 
-vi.mock('./../../hooks/useAuth', () => ({
+vi.mock('../../hooks/isAuth/useAuth', () => ({
 	useAuth: vi.fn(() => ({
 		isAuth: false,
 		login: vi.fn(),
