@@ -73,20 +73,20 @@ describe('LoginModal component', () => {
 	});
 
 	it('should close modal when press key Escape', async () => {
-		
+
 		const { rerender } = render(
 			<LoginModal isOpenModal={true} handleClose={handleClose} />
 		);
-		
+
 		await userEvent.keyboard('{Escape}');
-		
+
 		expect(handleClose).toHaveBeenCalledWith();
-		
+
 		rerender(<LoginModal isOpenModal={false} handleClose={handleClose} />);
-		
+
 		expect(screen.queryByTestId('login-modal')).toBeNull();
 	});
-	
+
 	it('should not close modal when clicking on modal', async () => {
 
 		render(<LoginModal isOpenModal={true} handleClose={handleClose} />);
@@ -96,157 +96,4 @@ describe('LoginModal component', () => {
 		expect(handleClose).not.toHaveBeenCalled();
 		expect(screen.queryByTestId('login-modal')).toBeInTheDocument();
 	});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// it('should call login on successful authorization', async () => {
-	// 	// const login = vi.fn();
-	// 	// const logout = vi.fn();
-	// 	// const handleShowModalClick = vi.fn();
-
-	// 	vi.mocked(authorization).mockResolvedValue({});
-
-	// 	// render(
-	// 	// 	<AuthContext.Provider value={{ isAuth: false, login, logout }}>
-	// 	// 		<LoginModal handleShowModalClick={handleShowModalClick} />
-	// 	// 	</AuthContext.Provider>
-	// 	// );
-
-	// 	await userEvent.type(screen.getByLabelText(/^Email:$/), 'tester@gmail.com');
-	// 	await userEvent.type(screen.getByLabelText(/^Password:$/), '12345678');
-
-	// 	await userEvent.click(screen.getByRole('button', { name: /^Войти$/ }));
-
-	// 	await waitFor(() => {
-	// 		expect(login).toBeCalled();
-	// 		expect(handleShowModalClick).toBeCalled();
-	// 	})
-	// });
-
-	// it('should disable submit button while processing', async () => {
-
-	// 	// const login = vi.fn();
-	// 	// const logout = vi.fn();
-	// 	// const handleShowModalClick = vi.fn();
-
-	// 	vi.mocked(authorization).mockImplementation(
-	// 		() => new Promise(resolve => setTimeout(resolve, 100))
-	// 	);
-
-	// 	// render(
-	// 	// 	<AuthContext.Provider value={{ isAuth: false, login, logout }}>
-	// 	// 		<LoginModal handleShowModalClick={handleShowModalClick} />
-	// 	// 	</AuthContext.Provider>
-	// 	// );
-
-	// 	await userEvent.type(screen.getByLabelText(/Email:/i), 'tester@gmail.com');
-	// 	await userEvent.type(screen.getByLabelText(/Password:/i), '12345678');
-	// 	await userEvent.click(screen.getByRole('button', { name: /^Войти$/ }));
-
-	// 	expect(screen.getByRole('button', { name: /^Processing...$/ })).toBeDisabled();
-
-	// 	await waitFor(() => {
-	// 		expect(screen.getByRole('button', { name: /^Войти$/ })).toBeEnabled();
-	// 	});
-	// });
-
-	// it('should clear form after submit', async () => {
-
-	// 	// const login = vi.fn();
-	// 	// const logout = vi.fn();
-	// 	// const handleShowModalClick = vi.fn();
-
-	// 	vi.mocked(authorization).mockResolvedValueOnce({});
-
-	// 	// render(
-	// 	// 	<AuthContext.Provider value={{ isAuth: false, login, logout }}>
-	// 	// 		<LoginModal handleShowModalClick={handleShowModalClick} />
-	// 	// 	</AuthContext.Provider>
-	// 	// );
-
-	// 	await userEvent.type(screen.getByLabelText(/Email:/i), 'tester@gmail.com');
-	// 	await userEvent.type(screen.getByLabelText(/Password:/i), '12345678');
-
-	// 	expect(screen.getByLabelText(/^Email:$/)).toHaveValue('tester@gmail.com');
-	// 	expect(screen.getByLabelText(/^Password:$/)).toHaveValue('12345678');
-
-	// 	await userEvent.click(screen.getByRole('button', { name: /^Войти$/ }));
-
-	// 	await waitFor(() => {
-	// 		expect(screen.getByLabelText(/^Email:$/)).toHaveValue('');
-	// 		expect(screen.getByLabelText(/^Password:$/)).toHaveValue('');
-	// 		expect(login).toBeCalled();
-	// 		expect(handleShowModalClick).toBeCalled();
-	// 	})
-	// });
-
-	// it('should clear form after submit', async () => {
-
-	// 	// const login = vi.fn();
-	// 	// const logout = vi.fn();
-	// 	// const handleShowModalClick = vi.fn();
-
-	// 	vi.mocked(authorization).mockResolvedValueOnce({});
-
-	// 	// render(
-	// 	// 	<AuthContext.Provider value={{ isAuth: false, login, logout }}>
-	// 	// 		<LoginModal handleShowModalClick={handleShowModalClick} />
-	// 	// 	</AuthContext.Provider>
-	// 	// );
-
-	// 	await userEvent.type(screen.getByLabelText(/Email:/i), 'tester@gmail.com');
-	// 	await userEvent.type(screen.getByLabelText(/Password:/i), '12345678');
-
-	// 	expect(screen.getByLabelText(/^Email:$/)).toHaveValue('tester@gmail.com');
-	// 	expect(screen.getByLabelText(/^Password:$/)).toHaveValue('12345678');
-
-	// 	await userEvent.click(screen.getByRole('button', { name: /^Войти$/ }));
-
-	// 	await waitFor(() => {
-	// 		expect(screen.getByLabelText(/^Email:$/)).toHaveValue('');
-	// 		expect(screen.getByLabelText(/^Password:$/)).toHaveValue('');
-	// 		expect(login).toBeCalled();
-	// 		expect(handleShowModalClick).toBeCalled();
-	// 	})
-	// });
-
-	// it('should generate general error', async () => {
-
-	// 	vi.mocked(authorization).mockRejectedValueOnce(new Error('Неверный логин или пароль'))
-
-	// 	// const handleShowModalClick = vi.fn();
-	// 	// const login = vi.fn();
-	// 	// const logout = vi.fn();
-
-	// 	// render(
-	// 	// 	<AuthContext.Provider value={{ isAuth: false, login, logout }}>
-	// 	// 		<LoginModal handleShowModalClick={handleShowModalClick} />
-	// 	// 	</AuthContext.Provider>
-	// 	// );
-
-	// 	await userEvent.type(screen.getByLabelText(/Email:/i), 'wrong@gmail.com');
-	// 	await userEvent.type(screen.getByLabelText(/Password:/i), '87654321');
-
-	// 	await userEvent.click(screen.getByRole('button', { name: /^Войти$/ }));
-
-	// 	expect(await screen.findByTestId('general-error')).toBeInTheDocument();
-	// 	expect(await screen.findByTestId('general-error')).toHaveTextContent('Неверный логин или пароль');
-	// });
 })

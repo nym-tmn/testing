@@ -34,7 +34,13 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleClose
 
 	const modalRef = useRef<HTMLDivElement>(null);
 
-	const { handleCloseBackdrop} = useHandleCloseModal(handleClose, modalRef)
+	const handleModalClose = () => {
+		// setLoginData({ email: '', password: '' });
+		setErrors({ general: '', email: '', password: '' });
+		handleClose();
+	};
+
+	const { handleCloseBackdrop } = useHandleCloseModal(handleModalClose, modalRef)
 
 	const handleLogin = async (data: LoginData) => {
 
@@ -70,7 +76,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleClose
 				data-testid='modal-content'
 				className={styles.modal}
 			>
-				<Button onClick={handleClose}>X</Button>
+				<Button onClick={handleModalClose}>X</Button>
 				<LoginForm
 					loginData={loginData}
 					setLoginData={setLoginData}
