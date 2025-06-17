@@ -51,13 +51,26 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 	}
 
 	return (
-		<form className={styles.form} onSubmit={handleSubmit}>
-			<p className={styles.paragraph}>Почта для входа tester@gmail.com</p>
+		<form className={styles.form} onSubmit={handleSubmit} data-testid='form'>
+			<p className={styles.paragraph}>Почта для входа test@mail.ru</p>
 			<p className={styles.paragraph}>Пароль для входа 12345678</p>
-			{errors.general && <p className={`${styles.paragraph} ${errors ? styles.error : ''}`}>{errors.general}</p>}
+			{errors.general &&
+				<p
+					data-testid='general-error'
+					className={`${styles.paragraph} ${errors ? styles.error : ''}`}
+				>
+					{errors.general}
+				</p>}
 			<label htmlFor="email">Email:</label>
-			{errors.email && <p className={`${styles.paragraph} ${errors ? styles.error : ''}`}>{errors.email}</p>}
+			{errors.email &&
+				<p
+					data-testid='email-error'
+					className={`${styles.paragraph} ${errors ? styles.error : ''}`}
+				>
+					{errors.email}
+				</p>}
 			<input
+				data-testid='email-input'
 				name='email'
 				// autoComplete='off'
 				id="email"
@@ -67,8 +80,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 				onChange={handleEmailChange}
 			/>
 			<label htmlFor="password">Password:</label>
-			{errors.password && <p className={`${styles.paragraph} ${errors ? styles.error : ''}`}>{errors.password}</p>}
+			{errors.password &&
+				<p
+					data-testid='password-error'
+					className={`${styles.paragraph} ${errors ? styles.error : ''}`}
+				>
+					{errors.password}
+				</p>}
 			<input
+				data-testid='password-input'
 				name='password'
 				id="password"
 				type="password"
