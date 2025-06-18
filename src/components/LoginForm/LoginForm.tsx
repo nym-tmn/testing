@@ -24,17 +24,21 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 }) => {
 
 	const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const value = event.target.value;
+		const value = event.target.value.trim();
 		setLoginData(loginData => ({ ...loginData, email: value }));
 		const emailError = validateEmail(value);
-		setErrors(errors => ({ ...errors, email: emailError }))
+		if (emailError) {
+			setErrors(errors => ({ ...errors, email: emailError }))
+		}
 	}
 
 	const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const value = event.target.value;
+		const value = event.target.value.trim();
 		setLoginData(loginData => ({ ...loginData, password: value }));
 		const passwordError = validatePassword(value);
-		setErrors(errors => ({ ...errors, password: passwordError }))
+		if (passwordError) {
+			setErrors(errors => ({ ...errors, password: passwordError }))
+		}
 	}
 
 	const handleSubmit = async (event: FormEvent) => {
@@ -51,7 +55,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 	}
 
 	return (
-		<form className={styles.form} onSubmit={handleSubmit} data-testid='form'>
+		<form className={styles.form} onSubmit={handleSubmit} data-testid='form' noValidate>
 			<p className={styles.paragraph}>Почта для входа test@mail.ru</p>
 			<p className={styles.paragraph}>Пароль для входа 12345678</p>
 			{errors.general &&
@@ -72,9 +76,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 			<input
 				data-testid='email-input'
 				name='email'
-				// autoComplete='off'
+				autoComplete='off'
 				id="email"
-				type="email"
+				type="text"
 				required
 				value={loginData.email}
 				onChange={handleEmailChange}

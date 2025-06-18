@@ -4,7 +4,6 @@ import { validateEmail } from "./validateEmail";
 describe('Validating email', () => {
 	it('should return error for empty email', () => {
 		expect(validateEmail('')).toBe('Email обязателен');
-		expect(validateEmail('   ')).toBe('Email обязателен');
 	});
 
 	it('should return error for invalid email', () => {

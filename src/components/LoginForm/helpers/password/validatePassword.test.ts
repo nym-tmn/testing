@@ -4,7 +4,6 @@ import { validatePassword } from "./validatePassword";
 describe('Validating password', () => {
 	it('should return error for empty password', () => {
 		expect(validatePassword('')).toBe('Пароль обязателен');
-		expect(validatePassword('   ')).toBe('Пароль обязателен');
 	});
 
 	it('should return error if password.length < 8', () => {

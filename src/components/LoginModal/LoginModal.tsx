@@ -35,7 +35,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleClose
 	const modalRef = useRef<HTMLDivElement>(null);
 
 	const handleModalClose = () => {
-		// setLoginData({ email: '', password: '' });
+		setLoginData({ email: '', password: '' });
 		setErrors({ general: '', email: '', password: '' });
 		handleClose();
 	};

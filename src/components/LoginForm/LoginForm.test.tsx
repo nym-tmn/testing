@@ -61,7 +61,7 @@ describe('LoginForm component', () => {
 		});
 	});
 
-	it('should be displayed email and password error messages', () => {
+	it('should displayed email and password error messages', () => {
 
 		render(
 			<LoginForm
@@ -83,7 +83,7 @@ describe('LoginForm component', () => {
 
 	});
 
-	it('should be displayed general error message', () => {
+	it('should displayed general error message', () => {
 
 		render(
 			<LoginForm
