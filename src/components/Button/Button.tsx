@@ -13,7 +13,7 @@ export const Button: React.FC<ButtonProps> = ({ children, onClick, disabled, typ
 	return (
 		<button
 			className={styles.button}
-			data-testid={'click-btn'}
+			data-testid='click-btn'
 			onClick={onClick}
 			type={type}
 			disabled={type === 'submit' ? disabled : false}

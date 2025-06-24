@@ -10,6 +10,7 @@ import { useHandleCloseModal } from "../../hooks/useHandleCloseModal/useHandleCl
 interface LoginModalProps {
 	isOpenModal: boolean;
 	handleClose: VoidFunction;
+	children?: React.ReactNode;
 }
 
 export interface LoginData {
