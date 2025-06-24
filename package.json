@@ -11,9 +11,11 @@
     "test": "vitest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "cypress:update": "cypress run --env updateSnapshots=true"
+    "cypress:open:storybook": "cypress open --env storybook=true",
+    "cypress:run:storybook": "cypress run --env storybook=true",
+    "cypress:update:storybook": "cypress run --env updateSnapshots=true,storybook=true",
+		"cypress:open:app": "cypress open --env storybook=false",
+		"cypress:run:app": "cypress run --env storybook=false"
   },
   "dependencies": {
     "react": "^19.1.0",

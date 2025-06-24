@@ -3,9 +3,16 @@ import { addMatchImageSnapshotPlugin } from '@simonsmith/cypress-image-snapshot/
 
 export default defineConfig({
 	e2e: {
-		baseUrl: 'http://localhost:6006',
-		setupNodeEvents(on) {
+		setupNodeEvents(on, config) {
 			addMatchImageSnapshotPlugin(on)
+			if (config.env.storybook) {
+				config.baseUrl = 'http://localhost:6006'
+				config.specPattern = 'cypress/e2e/storybook/**/*.{js,jsx,ts,tsx}'
+			} else {
+				config.specPattern = 'cypress/e2e/app/**/*.{js,jsx,ts,tsx}'
+				config.baseUrl = 'http://localhost:5173'
+			}
+			return config
 		}
 	}
 })

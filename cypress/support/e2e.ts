@@ -15,19 +15,7 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
-// import type { CypressImageSnapshotOptions } from '@simonsmith/cypress-image-snapshot/types';
 import { addMatchImageSnapshotCommand } from '@simonsmith/cypress-image-snapshot/command';
-
-// declare global {
-// 	namespace Cypress {
-// 		interface Chainable {
-// 			matchImageSnapshot(
-// 				nameOrOptions?: string | CypressImageSnapshotOptions,
-// 				options?: CypressImageSnapshotOptions
-// 			): Chainable<Element>;
-// 		}
-// 	}
-// }
 
 addMatchImageSnapshotCommand()
 
