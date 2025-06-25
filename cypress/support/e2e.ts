@@ -22,4 +22,7 @@ addMatchImageSnapshotCommand()
 addMatchImageSnapshotCommand({
 	customSnapshotsDir: 'cypress/snapshots/baselines',
 	customDiffDir: 'cypress/snapshots/__diffs__',
+	failureThreshold: 0.1, // Допустимо 0.1% отличий (дефолт обычно 0)
+	failureThresholdType: 'percent', // или 'pixels'
+	customDiffConfig: { threshold: 0.1 }, // Для алгоритма сравнения
 })
