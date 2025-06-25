@@ -10,6 +10,43 @@ exports[`App component > should render greeting and button with text "Exit" if a
   <button>
     Выйти
   </button>
+  <h3>
+    Список пользователей:
+  </h3>
+  <ul
+    data-testid="users-list"
+  >
+    <li>
+      Leanne Graham
+    </li>
+    <li>
+      Ervin Howell
+    </li>
+    <li>
+      Clementine Bauch
+    </li>
+    <li>
+      Patricia Lebsack
+    </li>
+    <li>
+      Chelsey Dietrich
+    </li>
+    <li>
+      Mrs. Dennis Schulist
+    </li>
+    <li>
+      Kurtis Weissnat
+    </li>
+    <li>
+      Nicholas Runolfsdottir V
+    </li>
+    <li>
+      Glenna Reichert
+    </li>
+    <li>
+      Clementina DuBuque
+    </li>
+  </ul>
 </div>
 `;
 
