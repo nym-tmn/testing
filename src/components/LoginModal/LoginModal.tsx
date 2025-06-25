@@ -71,7 +71,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpenModal, handleClose
 			data-testid='login-modal'
 			className={styles.modalOverlay}
 			ref={modalRef}
-			onClick={handleCloseBackdrop}
+			onMouseDown={handleCloseBackdrop}
 		>
 			<div
 				data-testid='modal-content'
